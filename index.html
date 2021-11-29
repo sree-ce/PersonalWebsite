@@ -514,28 +514,28 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
                       <div class="row">
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" onkeyup="namevalidate()" />
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" onkeyup="namevalidate()" onkeypress="return/[a-z A-A-Z]/i.test(event.key)"/>
                            <p id="name2"style="color:red;"></p>
                             <div class="validation"></div>
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" onkeyup="emailvalidate()" />
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" onkeyup="emailvalidate()"   />
                             <p id="email2"style="color:red;"></p>
                             <div class="validation"></div>
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" onkeyup="subjectValidate()"/>
-                              <p id="subject2"style="color:red;"></p>
+                              <input type="number" class="form-control" name="number" id="number" placeholder="Number" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" onkeyup="numberValidate()"/>
+                              <p id="number2"style="color:red;"></p>
                               <div class="validation"></div>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <textarea class="form-control" name="message" id="msg" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message" onkeyup="messegeValidate()"></textarea>
+                            <textarea class="form-control" name="message" id="msg" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message" onkeyup="messegeValidate()" minlength="4" ></textarea>
                             <p id="msg2"style="color:red;"></p>
                             <div class="validation"></div>
                           </div>
@@ -614,7 +614,7 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
 
     function namevalidate(){
       var varname=$('#name').val();
-      var pattern=/^[A-Za-z]+$/
+      var pattern=/^[a-zA-Z\s]*$/; 
       if(varname==""){
         $('#name2').html("enter name");
         return false;
@@ -622,10 +622,12 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
         $('#name2').html("");
         return true;
       }else{
-        $('#name2').html("Enter valid name");
-        return true;
+
+       $('#name2').html("Enter valid name");
+        return false;
       }
     }
+    
     function emailvalidate(){
       var varemail=$('#email').val();
       var patter2=/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -637,32 +639,46 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
         return true;
       }else{
         $('#email2').html("Enter valid email");
-        return true;
-      }
-    }
-    function subjectValidate(){
-      var varsub=$('#subject').val();
-      if(varsub==""){
-        $('#subject2').html("Enter the subject");
         return false;
-      }else{
-        $('#subject2').html("");
-        return true;
       }
     }
+    function numberValidate(){
+      var varnum=$('#number').val();
+      var pattern3=/^\d[10]$/;
+
+      if(varnum==""){
+        $('#number2').html("Enter valid number");
+        return false;
+      }else if(varnum.match(pattern3) ==false){
+        $('#number2').html("num only");
+        return false;
+
+       }else{
+
+       $('#number2').html("");
+        return true;
+      } 
+    }
+    
     function messegeValidate(){
       var varsub=$('#msg').val();
+      let minlength=4;
+      let length=varsub.length;
       if(varsub==""){
         $('#msg2').html("Enter the messege");
         return false;
+      }else if(length<minlength){
+        $('#msg2').html("Please enter minimum 4 charcaters");
+        return false;
       }else{
+
         $('#msg2').html("");
         return true;
       }
     }
 
     function validate(){
-      if(namevalidate()==true&&emailvalidate()==true&&subjectValidate()==true&&messegeValidate()==true){
+      if(namevalidate()==true && emailvalidate()==true && numberValidate()==true && messegeValidate()==true){
        
         $.ajax({
             url:"https://script.google.com/macros/s/AKfycbywApWE6Wyye_MJF3cRPw_wWnDk_fXBQ-LdKwlCn7XS7rH8i3whLfjEG0zYYnuQhWIMAg/exec",
@@ -678,6 +694,12 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
 
             }
         })
+      }
+      else{
+        namevalidate();
+        emailvalidate();
+        numberValidate();
+        messegeValidate();
       }
     }
 
