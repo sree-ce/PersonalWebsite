@@ -372,7 +372,7 @@
             <div class="testimonial-box">
               <div class="author-test">
                 <img src="img/IMG_20211128_112335.jpg" alt="" class="rounded-circle b-shadow-a"width="200" height="150">
-                <span class="author">Sreektty M R</span>
+                <span class="author">Sreekutty M R</span>
               </div>
               <div class="content-test">
                 <p class="description lead">
@@ -528,7 +528,7 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
                               <p id="number2"style="color:red;"></p>
                               <div class="validation"></div>
                             </div>
-                        </div>
+                        </div>,
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
                             <textarea class="form-control" name="message" id="msg" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message" onkeyup="messegeValidate()" minlength="4" ></textarea>
@@ -640,7 +640,7 @@ JavaScript was first known as LiveScript, but Netscape changed its name to JavaS
     }
     function numberValidate(){
       var varnum=$('#number').val();
-      var pattern3=/^\d[10]$/;
+      var pattern3=/^[0-9]$/;
 
       if(varnum==""){
         $('#number2').html("Enter valid number");
